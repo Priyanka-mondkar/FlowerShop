@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Wishlist - Moon Flowers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../styles/wishlist.css">
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar">
+    <div class="logo">
+        <img src="../assets/login/MOON-Photoroom.png" class="logoImg">
+        <!-- <span>Moon Flowers</span> -->
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="flower.html">Flowers</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="occasion.html">Occasions</a></li>
+        <li><a href="contacts.html">Contact</a></li>
+    </ul>
+
+    <div class="nav-icons">
+        
+    <!-- like icon -->
+    <a href="wishlist.html" class="wishlist-icon">
+        <i class="fa-regular fa-heart"></i>
+        <span id="wishlist-count">0</span>
+    </a>
+
+    <a href="cart.html" class="cart-icon">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span id="cartCount">0</span>
+    </a>
+
+       
+    </div>
+</nav>
+
+<!-- ================= WISHLIST SECTION ================= -->
+<h2>My Wishlist</h2>
+
+<div id="wishlist-container"></div>
+<!-- <button onclick="goToProduct(this)"
+    data-name="${item.name}"
+    data-image="${item.image}"
+    data-price="${item.price}"
+    data-description="${item.description}">
+    Shop Now
+</button> -->
+<!-- <button>Shop Now</button> -->
+
+<!-- ================= JS ================= -->
+<script src="../utils/wishlist.js"></script>
+<script src="../utils/product.js"></script>
+
+</body>
+</html>

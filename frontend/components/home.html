@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon Flowers</title>
+
+    <link rel="stylesheet" href="../styles/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+        <div class="logo">
+            <img src="../assets/login/MOON-Photoroom.png" class="logoImg">
+            <!-- <span>Moon Flowers</span> -->
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="home.html" class="active">Home</a></li>
+            <li><a href="flower.html">Flowers</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="occasion.html">Occasions</a></li>
+            <li><a href="contacts.html">Contact</a></li>
+        </ul>
+
+        <div class="nav-icons">
+
+            <!-- Wishlist -->
+            <a href="wishlist.html" class="wishlist-icon">
+                <i class="fa-regular fa-heart"></i>
+                <span id="wishlist-count">0</span>
+            </a>
+
+            <!-- Cart -->
+            <a href="cart.html" class="cart-icon">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span id="cartCount">0</span>
+            </a>
+
+            <!-- USER MENU -->
+            <div class="user-menu">
+
+                <!-- Login Icon -->
+                <i id="loginIcon" class="fa-regular fa-user"></i>
+
+                <!-- Profile Image -->
+                <img id="profileImg" class="nav-profile-img" style="display:none;">
+
+                <!-- Dropdown -->
+                <div class="dropdown-menu" id="dropdownMenu">
+
+                    <a href="account.html">
+                        <i class="fa fa-user"></i> My Account
+                    </a>
+
+                    <a href="orders.html">
+                        <i class="fa fa-box"></i> Orders
+                    </a>
+
+                    <a href="wishlist.html">
+                        <i class="fa fa-heart"></i> Wishlist
+                    </a>
+
+                    <a href="feedback.html">
+                        <i class="fa-solid fa-comment-dots"></i> Feedback
+                    </a>
+
+                    <a href="#" id="logoutBtn">
+                        <i class="fa fa-right-from-bracket"></i> Logout
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero">
+
+        <div class="left">
+            <h3>Beautiful Flowers<br>for<br>any Occasions</h3>
+            <h4>because every flower tells a story</h4>
+
+            <p>
+                Moon Flowers provides fresh, high quality flowers for every occasion.
+                Our beautifully arranged bouquets express love and emotions.
+            </p>
+
+            <button><a href="flower.html">SHOP NOW</a></button>
+        </div>
+
+        <div class="right">
+            <div class="big-image">
+                <img src="../assets/1.jpg">
+            </div>
+
+            <div class="small-image">
+                <img src="../assets/2.jpg">
+            </div>
+        </div>
+
+    </section>
+
+
+
+    <!-- chat bot------------------ -->
+    <!-- ========== FLOWER RECOMMENDATION CHATBOT (NO ADD TO CART) ========== -->
+    <style>
+        .chatbot-icon {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 60px;
+            height: 60px;
+            background: #6b2e5f;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-icon:hover {
+            background: #4a1e42;
+            transform: scale(1.05);
+        }
+
+        .chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 28px;
+            width: 380px;
+            height: 560px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1001;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            border: 1px solid rgba(107, 46, 95, 0.2);
+        }
+
+        .chat-window.hidden {
+            display: none;
+        }
+
+        .chat-header {
+            background: #6b2e5f;
+            color: white;
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .chat-header i {
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 16px 12px;
+            overflow-y: auto;
+            background: #fef9f3;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .bot-message,
+        .user-message {
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .bot-message {
+            background: #f0e6e9;
+            color: #2c1a2a;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .user-message {
+            background: #6b2e5f;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .flower-suggestion {
+            background: white;
+            border-radius: 18px;
+            margin: 8px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid #ffe0d4;
+        }
+
+        .flower-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+        }
+
+        .flower-item img {
+            width: 55px;
+            height: 55px;
+            object-fit: cover;
+            border-radius: 14px;
+            background: #f5ede8;
+        }
+
+        .flower-info {
+            flex: 1;
+        }
+
+        .flower-name {
+            font-weight: 700;
+            color: #3e2a2c;
+            font-size: 0.9rem;
+        }
+
+        .flower-price {
+            color: #b1624b;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        .choice-btn {
+            background: #f1e3dd;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-right: 8px;
+            margin-top: 6px;
+            color: #4a2c38;
+        }
+
+        .choice-btn:hover {
+            background: #e2cec4;
+        }
+
+        .restart-btn {
+            background: #e3cfc7;
+        }
+
+        .chat-footer {
+            padding: 10px;
+            background: #fff7f2;
+            border-top: 1px solid #f3e2da;
+            font-size: 11px;
+            text-align: center;
+            color: #7e5b54;
+        }
+    </style>
+
+    <div id="chatbotRoot"></div>
+
+    <script>
+        (function () {
+            // ---------- FLOWERS DATA (from your SQL dump) ----------
+            const flowersCatalog = [
+                { id: 9, name: "Sunflower Bouquet", price: 599, occasion_id: null, image: "assets/birthday/sunflower+jal.jpg" },
+                { id: 64, name: "lili", price: 450, occasion_id: 2, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775054114/uploads/utsy4chyaqxyiu1byy5r.jpg" },
+                { id: 65, name: "Pink Rose Bouquet", price: 450, occasion_id: 1, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775054762/uploads/hbegjrex47xlbyne1rpn.jpg" },
+                { id: 66, name: "Golden Flowers", price: 79, occasion_id: 1, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775055588/uploads/ie5etxgpveakotl4wh0n.jpg" },
+                { id: 67, name: "Carnation", price: 300, occasion_id: 1, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775056769/uploads/epynlmkdln7tp7dpc0sr.jpg" },
+                { id: 68, name: "Roses", price: 199, occasion_id: 1, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775057162/uploads/cjekhb0lq6o8z7zhasw5.jpg" },
+                { id: 69, name: "Lilies", price: 149, occasion_id: 1, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775057410/uploads/lq1qko94nk4jf1x11qsb.jpg" },
+                { id: 70, name: "Gerbera Daisies", price: 10, occasion_id: 1, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775057824/uploads/eoh6unxnoz6jhesvkhbu.jpg" },
+                { id: 71, name: "Golden Flowers", price: 150, occasion_id: 1, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775057958/uploads/fcrxohan84ne8rkke7w9.jpg" },
+                { id: 72, name: "Golden Flowers", price: 150, occasion_id: 1, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775058014/uploads/zbfwdvi6oawi8h29aost.jpg" },
+                { id: 73, name: "Orchid arrangemet", price: 90, occasion_id: 1, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775058303/uploads/smgjbbxzozsi7bhr8381.jpg" },
+                { id: 74, name: "Mixed Flower Bouquet", price: 140, occasion_id: 1, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775058539/uploads/nusuwetjtaynalh0bz2c.jpg" },
+                { id: 75, name: "Tulips", price: 200, occasion_id: 1, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775058722/uploads/pncahlolhs9hwlh8vldb.jpg" },
+                { id: 76, name: "Sunflowers", price: 88, occasion_id: 1, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775058848/uploads/mjq5pgels3yeho28fwv0.jpg" },
+                { id: 77, name: "Carnation", price: 200, occasion_id: 1, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061113/uploads/djoo1a0qddzyj2lyqyzn.jpg" },
+                { id: 78, name: "Carnation", price: 200, occasion_id: 2, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061163/uploads/trg0opv4jtadyvylkj2x.jpg" },
+                { id: 79, name: "Lily Rose", price: 180, occasion_id: 2, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061275/uploads/xziyalebsxwktul4o6pb.jpg" },
+                { id: 80, name: "Orchids", price: 150, occasion_id: 2, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061380/uploads/x31wr7zcub339adeg0r7.jpg" },
+                { id: 81, name: "Pink Roses", price: 120, occasion_id: 2, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061475/uploads/xpllvuq42tmgd83xe6eq.jpg" },
+                { id: 82, name: "Red Roses", price: 150, occasion_id: 2, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061558/uploads/ofl6ovsifwdkfah62xow.jpg" },
+                { id: 83, name: "Jasmine", price: 100, occasion_id: 2, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061622/uploads/t91jeue2vwfclforxu98.jpg" },
+                { id: 84, name: "Marigold", price: 70, occasion_id: 2, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061698/uploads/rgkskbzl97vhagjz4kyp.jpg" },
+                { id: 85, name: "Peonies", price: 130, occasion_id: 2, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061760/uploads/nmojb6ycgaqzl2qweuxv.jpg" },
+                { id: 86, name: "Tulips", price: 180, occasion_id: 2, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061835/uploads/f13lfrdvsoudvsq00krg.jpg" },
+                { id: 87, name: "Proud Moment Carnation Bouquet", price: 100, occasion_id: 3, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775062239/uploads/ehh3itizz0gubmfjv3px.jpg" },
+                { id: 88, name: "Bright Future Sunflower Bouquet", price: 150, occasion_id: 3, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775062320/uploads/xuhp3tb78s6u8ckghjvz.jpg" },
+                { id: 89, name: "Achievement Mixed Flower Bouquet", price: 140, occasion_id: 3, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775062417/uploads/vezolxp7vhhnld2jdufl.jpg" },
+                { id: 90, name: "Golden Glory Floral Box", price: 180, occasion_id: 3, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775062485/uploads/boho9k4rpc5rzawot8r2.jpg" },
+                { id: 91, name: "Rose bouquet", price: 80, occasion_id: 3, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775062598/uploads/oy2nezo0xjzpi5wvappc.jpg" },
+                { id: 92, name: "Lakshmi Pooja Flower Basket", price: 299, occasion_id: 4, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775062830/uploads/dn5sib3kspi2uyodqzea.jpg" },
+                { id: 93, name: "Royal Diwali Rose Bouquet", price: 200, occasion_id: 4, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775062917/uploads/jypzl7sveujymhi4zxxd.jpg" },
+                { id: 94, name: "Festive Floral Rangoli Pack", price: 250, occasion_id: 4, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775063001/uploads/jmwjq1yl86drhmfh19ls.jpg" },
+                { id: 95, name: "Divine Mogra Garland", price: 199, occasion_id: 4, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775063067/uploads/apvz1cdhv5uongpn3n7p.jpg" },
+                { id: 96, name: "Sunshine Festive Flowers", price: 300, occasion_id: 4, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775063158/uploads/g7fmj2yc76svqizi2ynw.jpg" },
+                { id: 97, name: "Orchid arrangemet", price: 200, occasion_id: 4, image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775069064/uploads/fnlkza6zmp3dk5ebg6as.jpg" }
+            ];
+
+            const occasionMap = {
+                1: "Birthday 🎂",
+                2: "Anniversary/Wedding 💍",
+                3: "Achievement/Graduation 🎓",
+                4: "Festival/Diwali 🪔"
+            };
+
+            let currentStep = 'occasion';
+            let selectedOccasionId = null;
+            let selectedBudget = null;
+
+            function addBotMessage(text, isHtml = false) {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'bot-message';
+                if (isHtml) msgDiv.innerHTML = text;
+                else msgDiv.innerText = text;
+                document.getElementById('chatMessages').appendChild(msgDiv);
+                scrollToBottom();
+            }
+
+            function addUserMessage(text) {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'user-message';
+                msgDiv.innerText = text;
+                document.getElementById('chatMessages').appendChild(msgDiv);
+                scrollToBottom();
+            }
+
+            function scrollToBottom() {
+                const container = document.getElementById('chatMessages');
+                if (container) container.scrollTop = container.scrollHeight;
+            }
+
+            function clearOptions() {
+                const optionsDiv = document.getElementById('chatOptions');
+                if (optionsDiv) optionsDiv.innerHTML = '';
+            }
+
+            function showOccasionOptions() {
+                clearOptions();
+                const optionsDiv = document.getElementById('chatOptions');
+                for (let [id, name] of Object.entries(occasionMap)) {
+                    const btn = document.createElement('button');
+                    btn.innerText = name;
+                    btn.className = 'choice-btn';
+                    btn.onclick = () => {
+                        addUserMessage(name);
+                        selectedOccasionId = parseInt(id);
+                        currentStep = 'budget';
+                        addBotMessage("Great! Now please select your budget range 💰:");
+                        showBudgetOptions();
+                    };
+                    optionsDiv.appendChild(btn);
+                }
+                const restartBtn = document.createElement('button');
+                restartBtn.innerText = "🔄 Restart";
+                restartBtn.className = 'choice-btn restart-btn';
+                restartBtn.onclick = () => resetChat();
+                optionsDiv.appendChild(restartBtn);
+            }
+
+            function showBudgetOptions() {
+                clearOptions();
+                const budgets = [
+                    { label: "Under ₹100", max: 100 },
+                    { label: "₹100 - ₹200", min: 100, max: 200 },
+                    { label: "₹200 - ₹400", min: 200, max: 400 },
+                    { label: "₹400+", min: 400, max: 999999 }
+                ];
+                const optionsDiv = document.getElementById('chatOptions');
+                budgets.forEach(b => {
+                    const btn = document.createElement('button');
+                    btn.innerText = b.label;
+                    btn.className = 'choice-btn budget-btn';
+                    btn.onclick = () => {
+                        addUserMessage(b.label);
+                        selectedBudget = b;
+                        currentStep = 'showResults';
+                        suggestFlowers();
+                    };
+                    optionsDiv.appendChild(btn);
+                });
+                const backBtn = document.createElement('button');
+                backBtn.innerText = "← Back to occasions";
+                backBtn.className = 'choice-btn';
+                backBtn.onclick = () => {
+                    addUserMessage("← Back");
+                    currentStep = 'occasion';
+                    selectedOccasionId = null;
+                    addBotMessage("Let's start over. Choose an occasion:");
+                    showOccasionOptions();
+                };
+                optionsDiv.appendChild(backBtn);
+            }
+
+            function suggestFlowers() {
+                let filtered = flowersCatalog.filter(f => f.occasion_id === selectedOccasionId);
+                if (selectedBudget) {
+                    if (selectedBudget.min !== undefined) {
+                        filtered = filtered.filter(f => f.price >= selectedBudget.min && f.price <= selectedBudget.max);
+                    } else if (selectedBudget.max === 100) {
+                        filtered = filtered.filter(f => f.price < 100);
+                    } else if (selectedBudget.label === "₹400+") {
+                        filtered = filtered.filter(f => f.price >= 400);
+                    }
+                }
+                filtered.sort((a, b) => a.price - b.price);
+                if (filtered.length === 0) {
+                    addBotMessage(`😔 No flowers found for ${occasionMap[selectedOccasionId]} within your budget. Try different budget or occasion.`);
+                    const retryBtn = document.createElement('button');
+                    retryBtn.innerText = "🔁 Start Over";
+                    retryBtn.className = 'choice-btn';
+                    retryBtn.onclick = () => resetChat();
+                    document.getElementById('chatOptions').appendChild(retryBtn);
+                    return;
+                }
+                let html = `<div><strong>✨ We found ${filtered.length} flower(s) for you:</strong></div>`;
+                filtered.forEach(flower => {
+                    let imgSrc = flower.image || 'https://via.placeholder.com/55?text=Flower';
+                    html += `
+                <div class="flower-suggestion">
+                    <div class="flower-item">
+                        <img src="${imgSrc}" onerror="this.src='https://via.placeholder.com/55?text=🌼'">
+                        <div class="flower-info">
+                            <div class="flower-name">${escapeHtml(flower.name)}</div>
+                            <div class="flower-price">₹${flower.price}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+                });
+                html += `<div style="margin-top:12px;"><button class="choice-btn restart-btn" id="chatRestartBtn">🔄 New Recommendation</button></div>`;
+                addBotMessage(html, true);
+                setTimeout(() => {
+                    const restart = document.getElementById('chatRestartBtn');
+                    if (restart) restart.onclick = () => resetChat();
+                }, 20);
+                clearOptions();
+            }
+
+            function escapeHtml(str) { return str.replace(/[&<>]/g, function (m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
+
+            function resetChat() {
+                currentStep = 'occasion';
+                selectedOccasionId = null;
+                selectedBudget = null;
+                const msgContainer = document.getElementById('chatMessages');
+                msgContainer.innerHTML = '';
+                const optionsDiv = document.getElementById('chatOptions');
+                optionsDiv.innerHTML = '';
+                addBotMessage("🌸 Hi! I'm Moon Flower Assistant. Let's find perfect flowers.\nChoose an occasion:");
+                showOccasionOptions();
+            }
+
+            function buildChatWindow() {
+                const chatHTML = `
+            <div class="chat-window hidden" id="chatWindow">
+                <div class="chat-header">
+                    <span><i class="fa-regular fa-comment-dots"></i> Flower Bot</span>
+                    <i class="fa-solid fa-xmark" id="closeChat"></i>
+                </div>
+                <div class="chat-messages" id="chatMessages"></div>
+                <div id="chatOptions" style="padding: 10px 15px 15px; background: #fef9f3; border-top: 1px solid #f3e2da;"></div>
+                <div class="chat-footer">⚡ Select occasion → budget → get flowers</div>
+            </div>
+            <div class="chatbot-icon" id="chatbotIcon">
+                <i class="fa-regular fa-message"></i>
+            </div>
+        `;
+                const container = document.getElementById('chatbotRoot');
+                container.innerHTML = chatHTML;
+                const chatWindow = document.getElementById('chatWindow');
+                const chatbotIcon = document.getElementById('chatbotIcon');
+                const closeChat = document.getElementById('closeChat');
+                chatbotIcon.addEventListener('click', () => {
+                    chatWindow.classList.remove('hidden');
+                    chatbotIcon.style.display = 'none';
+                    if (document.getElementById('chatMessages').children.length === 0) resetChat();
+                });
+                closeChat.addEventListener('click', () => {
+                    chatWindow.classList.add('hidden');
+                    chatbotIcon.style.display = 'flex';
+                });
+                resetChat();
+            }
+
+            buildChatWindow();
+        })();
+    </script>
+
+    
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <!-- Logo + About -->
+            <div class="footer-box">
+                <div class="footer-logo">
+                    <img src="../assets/login/IMG-20260225-WA0031.jpg" alt="Moon Flowers Logo">
+                    <h3>Moon Flowers</h3>
+                </div>
+                <p>
+                    Fresh and beautiful flowers for every special moment in your life.
+                </p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-box">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="flower.html">Flowers</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="occasion.html">Occasions</a></li>
+                    <li><a href="contacts.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="footer-box">
+                <h3>Contact Info</h3>
+                <p>Email: moonflowers662@gmail.com</p>
+                <p>Phone: +91 91756 96118</p>
+                <p>Location: Kankavli, India</p>
+            </div>
+
+            <!-- Social Media -->
+            <div class="footer-box">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/yourpage" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/moonflowers662/" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <!-- <i class="fa-brands fa-twitter"></i> -->
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Moon Flowers | All Rights Reserved</p>
+        </div>
+
+    </footer>
+
+    <script src="../utils/wishlist.js"></script>
+    <script src="../utils/cart.js"></script>
+    <script src="../utils/login.js"></script>
+    <!-- <script src="../utils/chatboat.js"></script> -->
+</body>
+
+</html>

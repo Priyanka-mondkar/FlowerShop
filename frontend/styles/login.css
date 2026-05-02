@@ -1,0 +1,211 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:url('../assets/login/newbg.jpg') no-repeat center center/cover;
+position:relative;
+overflow:hidden;
+}
+/* Back Arrow */
+.back-arrow{
+position:absolute;
+top:25px;
+left:25px;
+width:45px;
+height:45px;
+background:rgba(126, 125, 125, 0.2);
+backdrop-filter:blur(10px);
+display:flex;
+justify-content:center;
+align-items:center;
+border-radius:50%;
+color:black;
+font-size:18px;
+text-decoration:none;
+transition:0.3s;
+border:1px solid rgba(255,255,255,0.3);
+}
+
+.back-arrow:hover{
+background:#e86b9a;
+color:white;
+transform:translateX(-3px);
+}
+
+/* Container */
+.container{
+position:relative;
+width:750px;
+max-width:95%;
+height:420px;
+display:flex;
+border-radius:25px;
+overflow:hidden;
+
+/* 🌸 Glass Effect */
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(15px);
+-webkit-backdrop-filter:blur(15px);
+
+border:1px solid rgba(255,255,255,0.3);
+box-shadow:0 20px 40px rgba(0,0,0,0.25);
+}
+
+/* Left Login Section */
+.login-box{
+width:50%;
+padding:60px 50px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+color:white;
+}
+
+.login-box h2{
+font-size:28px;
+letter-spacing:2px;
+margin-bottom:5px;
+}
+
+.login-box h3{
+font-weight:normal;
+margin-bottom:30px;
+color:#f1f1f1;
+}
+
+.logo{
+width:12rem;
+align-self: center;    
+margin-bottom: 5px;
+}
+/* Inputs */
+.login-box input{
+padding:14px;
+margin-bottom:20px;
+border:none;
+border-radius:10px;
+background:rgba(255,255,255,0.25);
+color:black;
+outline:none;
+transition:0.3s;
+font-size:14px;
+width:100%;   /* ✅ Full Width */
+}
+
+.login-box input::placeholder{
+color:gray;
+}
+
+.login-box input:focus{
+background:rgba(255,255,255,0.35);
+transform:scale(1.02);
+}
+
+/* Button */
+button{
+padding:10px;
+border:none;
+border-radius:10px;
+background:#e86b9a;
+color:white;
+font-size:16px;
+cursor:pointer;
+transition:0.4s;
+width:100%;   /* ✅ Full Width */
+font-weight:600;
+}
+
+button:hover{
+transform:translateY(-3px);
+background:#d85c8b;
+}
+
+/* Error */
+.error{
+color:#ff8080;
+font-size:13px;
+margin-bottom:15px;
+}
+
+/* Register */
+.register{
+margin-top:20px;
+font-size:14px;
+color:black;   /* ✅ Better visibility */
+}
+
+.register a{
+color:#000;
+text-decoration:none;
+font-weight:bold;
+}
+
+.register a:hover{
+text-decoration:underline;
+}
+
+/* Right Image Section */
+.image-box{
+
+width:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.image-box img{
+width:85%;
+height:85%;
+object-fit:cover;
+border-radius:15px;
+}
+
+/* Responsive */
+@media(max-width:900px){
+.container{
+flex-direction:column;
+height:auto;
+}
+.login-box,.image-box{
+width:100%;
+}
+.login-box{
+padding:40px 25px;
+}
+.image-box{
+padding:20px;
+}
+}
+/* Hide register form by default */
+#registerForm{
+display:none;
+}
+
+#loginForm.active,
+#registerForm.active{
+display:block;
+}
+
+/* success and error msg */
+.success {
+    color: green;
+    background: #e6ffe6;
+    padding: 8px;
+    margin-top: 8px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}

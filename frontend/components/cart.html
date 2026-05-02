@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cart - Moon Flowers</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="../styles/cart.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+    <div class="logo">
+        <img src="../assets/login/MOON-Photoroom.png" class="logoImg">
+        <!-- <span>Moon Flowers</span> -->
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="home.html" class="active">Home</a></li>
+        <li><a href="flower.html">Flowers</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="occasion.html">Occasions</a></li>
+        <li><a href="contacts.html">Contact</a></li>
+    </ul>
+
+    <div class="nav-icons">
+        <!-- like icon -->
+    <a href="wishlist.html" class="wishlist-icon">
+        <i class="fa-regular fa-heart"></i>
+        <span id="wishlist-count">0</span>
+    </a>
+
+
+    <a href="cart.html" class="cart-icon">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span id="cartCount">0</span>
+    </a>
+
+ 
+        <!-- <i class="fa-regular fa-user" id="loginIcon"></i> -->
+    </div>
+</nav>
+
+<!-- ================= CART SECTION ================= -->
+
+<h2>My Cart</h2>
+
+<div class="cart-wrapper">
+
+    <table class="cart-table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody id="cart-container">
+        <!-- Cart items will be loaded here by JS -->
+    </tbody>
+</table>
+
+<div class="cart-summary">
+    <h3>Grand Total: ₹ <span id="grand-total">0</span></h3>
+    <button class="checkout-btn" onclick="goToCheckout()">Proceed To Checkout</button>
+</div>
+
+
+
+</div>
+
+<!-- JS Files -->
+<script src="../utils/wishlist.js"></script>
+<script src="../utils/cart.js"></script>
+
+</body>
+</html>

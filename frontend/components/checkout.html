@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Checkout - Moon Flowers</title>
+    <link rel="stylesheet" href="../styles/checkout.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <div class="checkout-container">
+
+        <div class="checkout-card">
+
+            <h2>Checkout</h2>
+
+            <!-- PRODUCT SECTION -->
+            <div class="product-section">
+
+                <img id="summaryImage">
+
+                <div class="product-details">
+
+                    <h3 id="summaryName"></h3>
+
+                    <p class="price">₹<span id="summaryPrice"></span></p>
+
+                    <div class="qty-box">
+                        <button onclick="decreaseQty()">−</button>
+                        <span id="summaryQty"></span>
+                        <button onclick="increaseQty()">+</button>
+                    </div>
+
+                    <p class="total">Total : ₹<span id="summaryTotal"></span></p>
+
+                    <button class="back-btn" onclick="goBack()">← Back</button>
+
+                </div>
+
+            </div>
+
+            <!-- ADD THIS -->
+            <div id="cartProducts"></div>
+
+
+            <!-- SHIPPING -->
+            <h3>Shipping Address</h3>
+
+            <div class="shipping-grid">
+
+                <input type="text" placeholder="Full Name">
+                <input type="tel" placeholder="Phone Number">
+
+                <input type="text" placeholder="Address" class="full">
+
+                <input type="text" placeholder="City">
+                <input type="text" placeholder="State">
+
+                <input type="text" placeholder="Zip Code" class="full">
+
+            </div>
+
+
+            <!-- PAYMENT -->
+            <h3>Payment Method</h3>
+
+            <div class="payment-options">
+
+                <button class="pay-option active" onclick="selectPayment('card')">Card</button>
+                <button class="pay-option" onclick="selectPayment('upi')">UPI</button>
+                <button class="pay-option" onclick="selectPayment('cod')">COD</button>
+
+            </div>
+
+
+            <!-- CARD DETAILS -->
+            <div id="cardDetails">
+
+                <input type="text" placeholder="Name on Card">
+                <input type="text" placeholder="Card Number">
+
+                <div class="card-row">
+                    <input type="text" placeholder="MM/YY">
+                    <input type="text" placeholder="CVV">
+                </div>
+
+            </div>
+
+
+            <!-- UPI -->
+            <div id="upiDetails">
+                <p>Scan QR to Pay</p>
+                <div id="qrcode"></div>
+            </div>
+
+
+            <button class="place-order" onclick="placeOrder()">Place Order</button>
+
+        </div>
+
+    </div>
+
+    <script src="../utils/checkout.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</body>
+
+</html>

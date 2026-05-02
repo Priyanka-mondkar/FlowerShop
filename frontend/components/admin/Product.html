@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon Admin | Product Management</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../styles/admin/Product.css">
+</head>
+
+<body>
+
+    <div class="dashboard">
+        <!-- ================= SIDEBAR (PINK THEME) ================= -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <div class="admin-avatar">
+                    <img id="sidebarAvatar" src="../../assets/admin profile.jpg" alt="admin">
+                </div>
+                <h2>Admin</h2>
+            </div>
+
+            <div class="sidebar-nav">
+                <p class="nav-section">MAIN</p>
+                <ul>
+                    <li data-tab="dashboard">
+                        <i class="fa-solid fa-layer-group"></i> <span>Dashboard</span>
+                    </li>
+                    <li class="active" data-tab="products">
+                        <i class="fa-solid fa-spa"></i> <span>Products</span>
+                    </li>
+                    <li data-tab="customers">
+                        <i class="fa-solid fa-users"></i> <span>Customers</span>
+                    </li>
+                    <li data-tab="transactions">
+                        <i class="fa-solid fa-credit-card"></i> <span>Transactions</span>
+                    </li>
+                    <li data-tab="feedbacks">
+                        <i class="fa-solid fa-comment-dots"></i> <span>Feedbacks</span>
+                    </li>
+                </ul>
+
+
+
+                <!-- ACCOUNT SECTION WITH LOGOUT BUTTON -->
+                <p class="nav-section">ACCOUNT</p>
+                <ul>
+                    <li id="logoutBtn">
+                        <i class="fa-solid fa-sign-out-alt"></i> <span>Logout</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- <div class="sidebar-footer">
+                <div class="admin-badge">
+                    <i class="fa-regular fa-moon"></i>
+                    <span>Floral Studio</span>
+                </div>
+            </div> -->
+        </aside>
+
+        <!-- ================= MAIN CONTENT (PINK ACCENTS) ================= -->
+        <main class="main-content">
+            <!-- Top Bar with greeting & flower icon -->
+            <div class="top-bar">
+                <div class="greeting">
+                    <h3>🌸 Product Management</h3>
+                    <p>Manage your floral inventory</p>
+                </div>
+                <div class="header-actions">
+                    <i class="fa-regular fa-bell"></i>
+                    <!-- <div class="admin-profile">
+                        <img src="https://placehold.co/38x38/ffd9e5/aa6f7e?text=🌙" alt="admin">
+                    </div> -->
+                </div>
+            </div>
+
+            <!-- STATS CARDS (pink/white theme) -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon pink-bg"><i class="fa-solid fa-box"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalProducts">0</h3>
+                        <p>Total Products</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon rose-bg"><i class="fa-solid fa-tags"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalCategories">0</h3>
+                        <p>Categories</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blush-bg"><i class="fa-solid fa-spa"></i></div>
+                    <div class="stat-info">
+                        <h3 id="inStockCount">0</h3>
+                        <p>In Stock</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon lavender-bg"><i class="fa-solid fa-chart-line"></i></div>
+                    <div class="stat-info">
+                        <h3 id="avgPrice">₹0</h3>
+                        <p>Avg. Price</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHARTS SECTION (dynamic) -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h4><i class="fa-solid fa-chart-simple"></i> Product Analytics</h4>
+                    <select id="chartTypeSelect">
+                        <option value="bar">📊 Bar Chart - Category Distribution</option>
+                        <option value="pie">🥧 Pie Chart - Category Distribution</option>
+                        <option value="line">📈 Line Chart - Price Range</option>
+                    </select>
+                </div>
+                <canvas id="productChart" width="400" height="200" style="max-height: 320px; width:100%"></canvas>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons-container">
+                <button class="btn-primary" id="addProductBtn">
+                    <i class="fa-solid fa-plus"></i> Add New Product
+                </button>
+                <div class="search-section">
+                    <div class="search-box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" id="searchProduct" placeholder="Search products...">
+                    </div>
+                    <select id="categoryFilter" class="filter-dropdown">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- PRODUCTS TABLE -->
+            <div class="data-table-section">
+                <div class="table-wrapper">
+                    <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productTableBody">
+                            <tr>
+                                <td colspan="7" class="loading-placeholder">
+                                    <i class="fa-solid fa-spinner fa-pulse"></i> Loading floral products...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add New Product</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <div class="form-group">
+                    <label>Product Name *</label>
+                    <input type="text" id="productName" required>
+                </div>
+                <div class="form-group">
+                    <label>Category *</label>
+                    <select id="productCategory" required>
+                        <option value="Birthday">Birthday</option>
+                        <option value="Anniversary">Anniversary</option>
+                        <option value="Celebration">Celebration</option>
+                        <option value="Diwali">Diwali</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Price (₹) *</label>
+                        <input type="number" id="productPrice" step="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Stock Quantity *</label>
+                        <input type="number" id="productStock" step="1" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Image URL *</label>
+                    <input type="file" id="productImage" accept="image/*" required>
+                    <!-- <input type="text" id="productImage" required placeholder="../assets/f1.jpg.jpeg"> -->
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="productDescription" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" id="cancelModalBtn">Cancel</button>
+                    <button type="submit" class="btn-save">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h3>Delete Product</h3>
+                <span class="close-delete-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete <strong id="deleteProductName"></strong>?</p>
+                <p class="warning-text">This action cannot be undone.</p>
+            </div>
+            <div class="form-actions">
+                <button class="btn-cancel" id="cancelDeleteBtn">Cancel</button>
+                <button class="btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../utils/admin/Product.js"></script>
+</body>
+
+</html>

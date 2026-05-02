@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon Admin | Feedback Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../styles/admin/feedback.css">
+</head>
+<body>
+
+<div class="dashboard">
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+        <div class="logo-area">
+            <div class="admin-avatar">
+                <img id="sidebarAvatar" src="../../assets/admin profile.jpg" alt="admin">
+            </div>
+            <h2>Admin</h2>
+        </div>
+        <div class="sidebar-nav">
+            <p class="nav-section">MAIN</p>
+            <ul>
+                <li data-tab="dashboard"><i class="fa-solid fa-layer-group"></i> <span>Dashboard</span></li>
+                <li data-tab="products"><i class="fa-solid fa-spa"></i> <span>Products</span></li>
+                <li data-tab="customers"><i class="fa-solid fa-users"></i> <span>Customers</span></li>
+                <li data-tab="transactions"><i class="fa-solid fa-credit-card"></i> <span>Transactions</span></li>
+                <li class="active" data-tab="feedbacks"><i class="fa-solid fa-comment-dots"></i> <span>Feedbacks</span></li>
+            </ul>
+            <p class="nav-section">ACCOUNT</p>
+            <ul>
+                <li id="logoutBtn"><i class="fa-solid fa-sign-out-alt"></i> <span>Logout</span></li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="main-content">
+        <div class="top-bar">
+            <div class="greeting">
+                <h3>💬 Feedback & Reviews</h3>
+                <p>Manage customer feedback and resolve issues</p>
+            </div>
+            <div class="header-actions">
+                <i class="fa-regular fa-bell"></i>
+            </div>
+        </div>
+
+        <!-- STATS CARDS -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon pink-bg"><i class="fa-solid fa-message"></i></div>
+                <div class="stat-info">
+                    <h3 id="totalFeedbacks">0</h3>
+                    <p>Total Feedbacks</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon rose-bg"><i class="fa-solid fa-hourglass-half"></i></div>
+                <div class="stat-info">
+                    <h3 id="pendingCount">0</h3>
+                    <p>Pending</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon blush-bg"><i class="fa-solid fa-check-circle"></i></div>
+                <div class="stat-info">
+                    <h3 id="resolvedCount">0</h3>
+                    <p>Resolved</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon lavender-bg"><i class="fa-solid fa-star"></i></div>
+                <div class="stat-info">
+                    <h3 id="avgRating">0.0</h3>
+                    <p>Avg. Rating</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="action-buttons-container">
+            <div class="search-section">
+                <div class="search-box">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="searchFeedback" placeholder="Search by name or email...">
+                </div>
+                <select id="statusFilter" class="filter-dropdown">
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="resolved">Resolved</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- FEEDBACK TABLE -->
+        <div class="data-table-section">
+            <div class="table-wrapper">
+                <table class="feedback-table">
+                    <thead>
+                        <tr><th>Customer</th><th>Rating</th><th>Message</th><th>Date</th><th>Status</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody id="feedbackTableBody">
+                        <tr><td colspan="6" class="loading-placeholder"><i class="fa-solid fa-spinner fa-pulse"></i> Loading feedback...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination" id="pagination"></div>
+        </div>
+    </main>
+</div>
+
+<!-- View Feedback Modal -->
+<div id="viewModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3>Feedback Details</h3><span class="close-view-modal">&times;</span></div>
+        <div class="modal-body" id="viewModalBody"></div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content small">
+        <div class="modal-header"><h3>Delete Feedback</h3><span class="close-delete-modal">&times;</span></div>
+        <div class="modal-body"><p>Are you sure you want to delete this feedback?</p><p class="warning-text">This action cannot be undone.</p></div>
+        <div class="form-actions"><button class="btn-cancel" id="cancelDeleteBtn">Cancel</button><button class="btn-danger" id="confirmDeleteBtn">Delete</button></div>
+    </div>
+</div>
+
+<script src="../../utils/admin/feedback.js"></script>
+</body>
+</html>

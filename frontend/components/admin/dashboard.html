@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon Admin | Floral Dashboard</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../styles/admin/dashboard.css">
+</head>
+
+<body>
+
+    <div class="dashboard">
+        <!-- ================= SIDEBAR (PINK THEME) ================= -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <div class="admin-avatar">
+                    <img id="sidebarAvatar" src="../../assets/admin profile.jpg" alt="admin">
+                </div>
+                <h2>Admin</h2>
+            </div>
+
+            <div class="sidebar-nav">
+                <p class="nav-section">MAIN</p>
+                <ul>
+                    <li class="active" data-tab="dashboard">
+                        <i class="fa-solid fa-layer-group"></i> <span>Dashboard</span>
+                    </li>
+                    <li data-tab="products">
+                        <i class="fa-solid fa-spa"></i> <span>Products</span>
+                    </li>
+                    <li data-tab="customers">
+                        <i class="fa-solid fa-users"></i> <span>Customers</span>
+                    </li>
+                    <li data-tab="transactions">
+                        <i class="fa-solid fa-credit-card"></i> <span>Transactions</span>
+                    </li>
+                    <li data-tab="feedbacks">
+                        <i class="fa-solid fa-comment-dots"></i> <span>Feedbacks</span>
+                    </li>
+                </ul>
+
+
+
+                <p class="nav-section">ACCOUNT</p>
+                <ul>
+                    <li id="logoutBtn">
+                        <i class="fa-solid fa-sign-out-alt"></i> <span>Logout</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- <div class="sidebar-footer">
+                <div class="admin-badge">
+                    <i class="fa-regular fa-moon"></i>
+                    <span>Floral Studio</span>
+                </div>
+            </div> -->
+        </aside>
+
+        <!-- ================= MAIN CONTENT (PINK ACCENTS) ================= -->
+        <main class="main-content">
+            <!-- Top Bar with greeting & flower icon -->
+            <div class="top-bar">
+                <div class="greeting">
+                    <h3>🌸 Welcome back, <span id="adminName">Florist</span></h3>
+                    <p>Here's what's blooming today</p>
+                </div>
+                <div class="header-actions">
+                    <i class="fa-regular fa-bell"></i>
+                    <!-- <div class="admin-profile">
+                        <img src="https://placehold.co/38x38/ffd9e5/aa6f7e?text=🌙" alt="admin">
+                    </div> -->
+                </div>
+            </div>
+
+            <!-- STATS CARDS (pink/white theme) -->
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <div class="stat-icon pink-bg"><i class="fa-solid fa-chart-line"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalRevenue">₹0</h3>
+                        <p>Total Revenue</p>
+                        <span class="trend up" id="revenueTrend">+0% <i class="fa-solid fa-arrow-up"></i></span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon rose-bg"><i class="fa-solid fa-basket-shopping"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalOrders">0</h3>
+                        <p>Orders</p>
+                        <span class="trend up" id="ordersTrend">+0%</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blush-bg"><i class="fa-solid fa-user-plus"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalCustomers">0</h3>
+                        <p>New Customers</p>
+                        <span class="trend up" id="customersTrend">+0%</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon lavender-bg"><i class="fa-solid fa-spa"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalProducts">0</h3>
+                        <p>Flower Types</p>
+                        <span class="trend neutral" id="productsStatus">in stock</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHARTS SECTION (dynamic) -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h4><i class="fa-solid fa-chart-simple"></i> Sales Overview (Last 6 Months)</h4>
+                    <select id="chartTypeSelect">
+                        <option value="bar">📊 Bar Chart</option>
+                        <option value="pie">🥧 Pie Chart</option>
+                        <option value="line">📈 Line Chart</option>
+                    </select>
+                </div>
+                <canvas id="mainChart" width="400" height="200" style="max-height: 320px; width:100%"></canvas>
+            </div>
+
+            <!-- TABBED CONTENT: PRODUCTS / CUSTOMERS / TRANSACTIONS (Dynamic) -->
+            <div class="data-table-section" id="dynamicTabContent">
+                <!-- content will be injected via js -->
+                <div class="loading-placeholder"><i class="fa-solid fa-spinner fa-pulse"></i> Loading floral data...
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../utils/admin/dashboard.js"></script>
+</body>
+
+</html>

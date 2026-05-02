@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Assistant - Moon Flowers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f0e8 0%, #e8ddd0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .chatbot-container {
+            max-width: 700px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+            max-height: 700px;
+        }
+
+        .chat-header {
+            background: #2c5f2d;
+            color: white;
+            padding: 20px 25px;
+            text-align: center;
+        }
+        .chat-header i { font-size: 2rem; margin-bottom: 8px; }
+        .chat-header h2 { margin: 5px 0; }
+        .chat-header p { font-size: 0.9rem; opacity: 0.9; }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: #fef9f0;
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            animation: fadeIn 0.3s ease;
+        }
+        .message.bot { justify-content: flex-start; }
+        .message.user { justify-content: flex-end; }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            background: #2c5f2d;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+        }
+        .message.user .avatar {
+            background: #d4a373;
+            order: 2;
+        }
+        .message .text {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            line-height: 1.4;
+        }
+        .message.bot .text {
+            background: #e9f5e9;
+            border-top-left-radius: 5px;
+        }
+        .message.user .text {
+            background: #2c5f2d;
+            color: white;
+            border-top-right-radius: 5px;
+        }
+
+        .occasion-btn {
+            background: #ffb74d;
+            border: none;
+            padding: 8px 15px;
+            margin: 5px 8px 5px 0;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .occasion-btn:hover {
+            background: #ff9800;
+            transform: scale(1.02);
+        }
+
+        .budget-chip {
+            background: #f0f0f0;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-block;
+            margin: 5px;
+        }
+        .budget-chip:hover {
+            background: #2c5f2d;
+            color: white;
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #eee;
+            gap: 10px;
+        }
+        #chatInput {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 40px;
+            outline: none;
+            font-size: 1rem;
+        }
+        #sendBtn {
+            background: #2c5f2d;
+            border: none;
+            color: white;
+            width: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        #sendBtn:hover { background: #1e3a1e; }
+
+        .budget-suggestions {
+            padding: 10px 15px 15px;
+            background: white;
+            border-top: 1px solid #f0f0f0;
+            text-align: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .flower-suggestion {
+            background: #fff3e0;
+            border-left: 4px solid #ffb74d;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 12px;
+        }
+        .flower-suggestion strong {
+            color: #2c5f2d;
+        }
+        .search-link {
+            display: inline-block;
+            margin-top: 8px;
+            background: #2c5f2d;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .search-link:hover {
+            background: #1e3a1e;
+        }
+    </style>
+</head>
+<body>
+<div class="chatbot-container">
+    <div class="chat-header">
+        <i class="fas fa-robot"></i>
+        <h2>Flower Assistant 🌸</h2>
+        <p>Tell me your occasion & budget → I'll suggest perfect flowers!</p>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+        <div class="message bot">
+            <div class="avatar"><i class="fas fa-leaf"></i></div>
+            <div class="text">Hi there! 👋 I'm your flower expert.<br>Which occasion are you celebrating?<br><br>
+                <button class="occasion-btn" data-occ="1">🎂 Birthday</button>
+                <button class="occasion-btn" data-occ="2">💍 Anniversary</button>
+                <button class="occasion-btn" data-occ="3">🎉 Celebration</button>
+                <button class="occasion-btn" data-occ="4">🪔 Diwali</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="Type your message or budget (e.g. ₹500)..." autocomplete="off">
+        <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+    <div class="budget-suggestions">
+        <span class="budget-chip" data-budget="200">₹200</span>
+        <span class="budget-chip" data-budget="500">₹500</span>
+        <span class="budget-chip" data-budget="1000">₹1000</span>
+        <span class="budget-chip" data-budget="1500">₹1500+</span>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+<script>
+    // ========== FLOWER DATA (from your database) ==========
+    const allFlowers = [
+        { id: 9, name: "Sunflower Bouquet", price: 599, occasion_id: 1, description: "Beautiful fresh Sunflower bouquet for your loved ones.", image: "assets/birthday/sunflower+jal.jpg" },
+        { id: 64, name: "lili", price: 450, occasion_id: 2, description: "best flower", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775054114/uploads/utsy4chyaqxyiu1byy5r.jpg" },
+        { id: 65, name: "Pink Rose Bouquet", price: 450, occasion_id: 1, description: "red rose", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775054762/uploads/hbegjrex47xlbyne1rpn.jpg" },
+        { id: 66, name: "Golden Flowers", price: 79, occasion_id: 1, description: "Beautiful golden birthday bouquet", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775055588/uploads/ie5etxgpveakotl4wh0n.jpg" },
+        { id: 67, name: "Carnation", price: 300, occasion_id: 1, description: "Soft, long-lasting flowers expressing admiration.", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775056769/uploads/epynlmkdln7tp7dpc0sr.jpg" },
+        { id: 68, name: "Roses", price: 199, occasion_id: 1, description: "Timeless blooms that symbolize love.", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775057162/uploads/cjekhb0lq6o8z7zhasw5.jpg" },
+        { id: 69, name: "Lilies", price: 149, occasion_id: 1, description: "Elegant flowers representing positivity.", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775057410/uploads/lq1qko94nk4jf1x11qsb.jpg" },
+        { id: 70, name: "Gerbera Daisies", price: 10, occasion_id: 1, description: "Bright and cheerful blooms.", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775057824/uploads/eoh6unxnoz6jhesvkhbu.jpg" },
+        { id: 78, name: "Carnation", price: 200, occasion_id: 2, description: "Long-lasting flowers that represent faithful love", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061163/uploads/trg0opv4jtadyvylkj2x.jpg" },
+        { id: 79, name: "Lily Rose", price: 180, occasion_id: 2, description: "Elegant flowers symbolizing commitment", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061275/uploads/xziyalebsxwktul4o6pb.jpg" },
+        { id: 80, name: "Orchids", price: 150, occasion_id: 2, description: "Exotic blooms that show luxury", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061380/uploads/x31wr7zcub339adeg0r7.jpg" },
+        { id: 81, name: "Pink Roses", price: 120, occasion_id: 2, description: "Express admiration and gentle love", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061475/uploads/xpllvuq42tmgd83xe6eq.jpg" },
+        { id: 82, name: "Red Roses", price: 150, occasion_id: 2, description: "Classic symbol of deep love", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061558/uploads/ofl6ovsifwdkfah62xow.jpg" },
+        { id: 83, name: "Jasmine", price: 100, occasion_id: 2, description: "Fragrant flowers symbolizing purity", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061622/uploads/t91jeue2vwfclforxu98.jpg" },
+        { id: 84, name: "Marigold", price: 70, occasion_id: 2, description: "Traditional Indian flower representing happiness", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061698/uploads/rgkskbzl97vhagjz4kyp.jpg" },
+        { id: 85, name: "Peonies", price: 130, occasion_id: 2, description: "Soft blooms representing prosperity", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061760/uploads/nmojb6ycgaqzl2qweuxv.jpg" },
+        { id: 86, name: "Tulips", price: 180, occasion_id: 2, description: "Graceful flowers symbolizing perfect love", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775061835/uploads/f13lfrdvsoudvsq00krg.jpg" },
+        { id: 87, name: "Proud Moment Carnation Bouquet", price: 100, occasion_id: 3, description: "Classic carnation to celebrate success", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775062239/uploads/ehh3itizz0gubmfjv3px.jpg" },
+        { id: 88, name: "Bright Future Sunflower Bouquet", price: 150, occasion_id: 3, description: "Cheerful sunflowers symbolizing success", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775062320/uploads/xuhp3tb78s6u8ckghjvz.jpg" },
+        { id: 89, name: "Achievement Mixed Flower Bouquet", price: 140, occasion_id: 3, description: "Vibrant mix to honor a milestone", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775062417/uploads/vezolxp7vhhnld2jdufl.jpg" },
+        { id: 90, name: "Golden Glory Floral Box", price: 180, occasion_id: 3, description: "Premium flowers arranged in a box", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775062485/uploads/boho9k4rpc5rzawot8r2.jpg" },
+        { id: 91, name: "Rose bouquet", price: 80, occasion_id: 3, description: "Enjoy!!", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775062598/uploads/oy2nezo0xjzpi5wvappc.jpg" },
+        { id: 92, name: "Lakshmi Pooja Flower Basket", price: 299, occasion_id: 4, description: "Traditional marigold and jasmine mix", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775062830/uploads/dn5sib3kspi2uyodqzea.jpg" },
+        { id: 93, name: "Royal Diwali Rose Bouquet", price: 200, occasion_id: 4, description: "Elegant red roses for festive season", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775062917/uploads/jypzl7sveujymhi4zxxd.jpg" },
+        { id: 94, name: "Festive Floral Rangoli Pack", price: 250, occasion_id: 4, description: "Loose colorful flowers for rangoli", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775063001/uploads/jmwjq1yl86drhmfh19ls.jpg" },
+        { id: 95, name: "Divine Mogra Garland", price: 199, occasion_id: 4, description: "Fragrant jasmine garland for pooja", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775063067/uploads/apvz1cdhv5uongpn3n7p.jpg" },
+        { id: 96, name: "Sunshine Festive Flowers", price: 300, occasion_id: 4, description: "Bright festive flowers", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775063158/uploads/g7fmj2yc76svqizi2ynw.jpg" },
+        { id: 97, name: "Orchid arrangement", price: 200, occasion_id: 4, description: "Special for Diwali", image: "https://res.cloudinary.com/dktiu1ujx/image/upload/v1775069064/uploads/fnlkza6zmp3dk5ebg6as.jpg" }
+    ];
+
+    let currentOccasionId = null;
+    let currentBudget = null;
+
+    const chatMessages = document.getElementById("chatMessages");
+    const chatInput = document.getElementById("chatInput");
+    const sendBtn = document.getElementById("sendBtn");
+
+    function addMessage(text, isUser = false, isHtml = false) {
+        const msgDiv = document.createElement("div");
+        msgDiv.className = `message ${isUser ? "user" : "bot"}`;
+        const avatar = document.createElement("div");
+        avatar.className = "avatar";
+        avatar.innerHTML = isUser ? '<i class="fas fa-user"></i>' : '<i class="fas fa-leaf"></i>';
+        const textDiv = document.createElement("div");
+        textDiv.className = "text";
+        if (isHtml) textDiv.innerHTML = text;
+        else textDiv.innerText = text;
+        msgDiv.appendChild(avatar);
+        msgDiv.appendChild(textDiv);
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showTyping() {
+        const typingDiv = document.createElement("div");
+        typingDiv.className = "message bot";
+        typingDiv.id = "typingIndicator";
+        typingDiv.innerHTML = `<div class="avatar"><i class="fas fa-leaf"></i></div>
+                               <div class="text">🌸 thinking...</div>`;
+        chatMessages.appendChild(typingDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    function hideTyping() {
+        const typing = document.getElementById("typingIndicator");
+        if (typing) typing.remove();
+    }
+
+    function filterFlowers() {
+        let filtered = [];
+        if (currentOccasionId === 1) filtered = allFlowers.filter(f => f.occasion_id === 1);
+        else if (currentOccasionId === 2) filtered = allFlowers.filter(f => f.occasion_id === 2);
+        else if (currentOccasionId === 3) filtered = allFlowers.filter(f => f.occasion_id === 3);
+        else if (currentOccasionId === 4) filtered = allFlowers.filter(f => f.occasion_id === 4);
+        if (currentBudget !== null && currentBudget > 0) {
+            filtered = filtered.filter(f => f.price <= currentBudget);
+        }
+        return filtered;
+    }
+
+    function suggestFlowers() {
+        if (!currentOccasionId) {
+            addMessage("Please select an occasion first using the buttons above ☝️", false);
+            return;
+        }
+        showTyping();
+        setTimeout(() => {
+            hideTyping();
+            const occasionNames = {1:"Birthday 🎂",2:"Anniversary 💍",3:"Celebration 🎉",4:"Diwali 🪔"};
+            let message = `You chose ${occasionNames[currentOccasionId]}. `;
+            if (currentBudget) message += `Budget: ₹${currentBudget}. `;
+            const matched = filterFlowers();
+            if (matched.length === 0) {
+                message += "😔 Sorry, no flowers found within your budget. Try increasing budget or choose another occasion.";
+                addMessage(message, false);
+            } else {
+                message += `✨ Here are ${matched.length} flower(s) for you:`;
+                let html = `<div>${message}</div><div style="margin-top: 10px;">`;
+                matched.forEach(f => {
+                    html += `<div class="flower-suggestion">
+                                <strong>🌸 ${f.name}</strong> - ₹${f.price}<br>
+                                <small>${f.description || "Beautiful choice!"}</small><br>
+                                <button class="search-link" data-flower="${f.name}">🔍 Search '${f.name}' on Occasion Page</button>
+                             </div>`;
+                });
+                html += `</div><div style="margin-top:15px;">👉 Would you like to choose another occasion or budget?</div>`;
+                addMessage(html, false, true);
+                // Attach search link events
+                document.querySelectorAll('.search-link').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const flowerName = btn.getAttribute('data-flower');
+                        // Redirect to occasion.html with search query
+                        window.location.href = `occasion.html?search=${encodeURIComponent(flowerName)}`;
+                    });
+                });
+            }
+        }, 500);
+    }
+
+    function setOccasion(occasionId) {
+        currentOccasionId = occasionId;
+        const names = {1:"Birthday 🎂",2:"Anniversary 💍",3:"Celebration 🎉",4:"Diwali 🪔"};
+        addMessage(`Great! You selected ${names[occasionId]}.`, false);
+        addMessage(`Now, what's your budget? (e.g. ₹500) or type "skip"`, false);
+    }
+
+    function handleBudgetInput(rawInput) {
+        let budget = null;
+        const cleaned = rawInput.replace(/[^0-9]/g, '');
+        if (cleaned) {
+            budget = parseInt(cleaned);
+            currentBudget = budget;
+            addMessage(`Budget set to ₹${budget}. Looking for best flowers...`, false);
+            suggestFlowers();
+        } else if (rawInput.toLowerCase() === "skip") {
+            currentBudget = null;
+            addMessage(`No problem! Showing all options regardless of price.`, false);
+            suggestFlowers();
+        } else {
+            addMessage(`Please enter a valid number (e.g. 500) or type "skip".`, false);
+        }
+    }
+
+    function processUserMessage(text) {
+        addMessage(text, true);
+        if (currentOccasionId && currentBudget === undefined) {
+            handleBudgetInput(text);
+            return;
+        }
+        const budgetMatch = text.match(/(\d+)/);
+        if (budgetMatch && currentOccasionId && currentBudget === undefined) {
+            handleBudgetInput(budgetMatch[0]);
+            return;
+        }
+        if (!currentOccasionId) {
+            addMessage("Please click on an occasion button above (Birthday, Anniversary, etc.)", false);
+            return;
+        }
+        suggestFlowers();
+    }
+
+    function attachOccasionEvents() {
+        document.querySelectorAll(".occasion-btn").forEach(btn => {
+            btn.removeEventListener("click", occasionHandler);
+            btn.addEventListener("click", occasionHandler);
+        });
+    }
+    function occasionHandler(e) {
+        const occId = parseInt(e.currentTarget.getAttribute("data-occ"));
+        setOccasion(occId);
+    }
+
+    sendBtn.addEventListener("click", () => {
+        const msg = chatInput.value.trim();
+        if (!msg) return;
+        chatInput.value = "";
+        processUserMessage(msg);
+    });
+    chatInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") sendBtn.click();
+    });
+
+    document.querySelectorAll(".budget-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+            if (!currentOccasionId) {
+                addMessage("Please select an occasion first!", false);
+                return;
+            }
+            const budgetVal = parseInt(chip.getAttribute("data-budget"));
+            currentBudget = budgetVal;
+            addMessage(`Using budget chip: ₹${budgetVal}`, false);
+            suggestFlowers();
+        });
+    });
+
+    attachOccasionEvents();
+</script>
+</body>
+</html>

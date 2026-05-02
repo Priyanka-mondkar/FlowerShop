@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon Admin | Transaction Management</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../styles/admin/transaction.css">
+</head>
+
+<body>
+
+    <div class="dashboard">
+        <!-- ================= SIDEBAR (PINK THEME) ================= -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <div class="admin-avatar">
+                    <img id="sidebarAvatar" src="../../assets/admin profile.jpg" alt="admin">
+                </div>
+                <h2>Admin</h2>
+            </div>
+
+            <div class="sidebar-nav">
+                <p class="nav-section">MAIN</p>
+                <ul>
+                    <li data-tab="dashboard">
+                        <i class="fa-solid fa-layer-group"></i> <span>Dashboard</span>
+                    </li>
+                    <li data-tab="products">
+                        <i class="fa-solid fa-spa"></i> <span>Products</span>
+                    </li>
+                    <li data-tab="customers">
+                        <i class="fa-solid fa-users"></i> <span>Customers</span>
+                    </li>
+                    <li class="active" data-tab="transactions">
+                        <i class="fa-solid fa-credit-card"></i> <span>Transactions</span>
+                    </li>
+                    <li data-tab="feedbacks">
+                        <i class="fa-solid fa-comment-dots"></i> <span>Feedbacks</span>
+                    </li>
+                </ul>
+
+
+
+                <!-- ACCOUNT SECTION WITH LOGOUT BUTTON -->
+                <p class="nav-section">ACCOUNT</p>
+                <ul>
+                    <li id="logoutBtn">
+                        <i class="fa-solid fa-sign-out-alt"></i> <span>Logout</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- <div class="sidebar-footer">
+                <div class="admin-badge">
+                    <i class="fa-regular fa-moon"></i>
+                    <span>Floral Studio</span>
+                </div>
+            </div> -->
+        </aside>
+
+        <!-- ================= MAIN CONTENT (PINK ACCENTS) ================= -->
+        <main class="main-content">
+            <!-- Top Bar with greeting & flower icon -->
+            <div class="top-bar">
+                <div class="greeting">
+                    <h3>💳 Transaction Management</h3>
+                    <p>Track and manage all orders & payments</p>
+                </div>
+                <div class="header-actions">
+                    <i class="fa-regular fa-bell"></i>
+                    <!-- <div class="admin-profile">
+                        <img src="https://placehold.co/38x38/ffd9e5/aa6f7e?text=🌙" alt="admin">
+                    </div> -->
+                </div>
+            </div>
+
+            <!-- STATS CARDS (pink/white theme) -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon pink-bg"><i class="fa-solid fa-chart-line"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalRevenue">₹0</h3>
+                        <p>Total Revenue</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon rose-bg"><i class="fa-solid fa-basket-shopping"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalOrders">0</h3>
+                        <p>Total Orders</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blush-bg"><i class="fa-solid fa-clock"></i></div>
+                    <div class="stat-info">
+                        <h3 id="pendingOrders">0</h3>
+                        <p>Pending Orders</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon lavender-bg"><i class="fa-solid fa-check-circle"></i></div>
+                    <div class="stat-info">
+                        <h3 id="completedOrders">0</h3>
+                        <p>Completed Orders</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHARTS SECTION (dynamic) -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h4><i class="fa-solid fa-chart-simple"></i> Transaction Analytics</h4>
+                    <select id="chartTypeSelect">
+                        <option value="bar">📊 Bar Chart - Monthly Revenue</option>
+                        <option value="pie">🥧 Pie Chart - Payment Methods</option>
+                        <option value="line">📈 Line Chart - Revenue Trend</option>
+                    </select>
+                </div>
+                <canvas id="transactionChart" width="400" height="200" style="max-height: 320px; width:100%"></canvas>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons-container">
+                <button class="btn-primary" id="exportBtn">
+                    <i class="fa-solid fa-download"></i> Export Report
+                </button>
+                <div class="search-section">
+                    <div class="search-box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" id="searchTransaction"
+                            placeholder="Search by order ID, customer, product...">
+                    </div>
+                    <select id="statusFilter" class="filter-dropdown">
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="processing">Processing</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                    <select id="paymentFilter" class="filter-dropdown">
+                        <option value="all">All Payment Methods</option>
+                        <option value="Credit Card">Credit Card</option>
+
+                        <option value="UPI">UPI</option>
+                        <option value="Cash on Delivery">Cash on Delivery</option>
+
+                    </select>
+                </div>
+            </div>
+
+            <!-- TRANSACTIONS TABLE -->
+            <div class="data-table-section">
+                <div class="table-wrapper">
+                    <table class="transaction-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer Name</th>
+                                <th>Product</th>
+                                <th>Amount</th>
+                                <th>Payment Method</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionTableBody">
+                            <tr>
+                                <td colspan="8" class="loading-placeholder">
+                                    <i class="fa-solid fa-spinner fa-pulse"></i> Loading transaction data...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- View Transaction Modal -->
+    <div id="viewModal" class="modal">
+        <div class="modal-content medium">
+            <div class="modal-header">
+                <h3>Transaction Details</h3>
+                <span class="close-view-modal">&times;</span>
+            </div>
+            <div class="modal-body" id="transactionDetails">
+                <!-- Dynamic content -->
+            </div>
+            <div class="form-actions">
+                <button class="btn-cancel" id="closeViewBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Status Modal -->
+    <div id="statusModal" class="modal">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h3>Update Order Status</h3>
+                <span class="close-status-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="updateOrderId">
+                <div class="form-group">
+                    <label>Order Status</label>
+                    <select id="updateStatus" class="status-select">
+                        <option value="pending">Pending</option>
+                        <option value="processing">Processing</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn-cancel" id="cancelStatusBtn">Cancel</button>
+                <button class="btn-save" id="confirmStatusBtn">Update Status</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../utils/admin/transaction.js"></script>
+</body>
+
+</html>

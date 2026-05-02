@@ -1,0 +1,413 @@
+body{
+    font-family:'Poppins',sans-serif;
+    margin:0;
+    padding:0;
+    background:#f8e4e7;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 6%;
+    background:#ead6da;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    font-weight:600;
+}
+
+.logoImg{
+    height:45px;
+    margin-right:8px;
+}
+
+.nav-links{
+    list-style:none;
+    display:flex;
+    gap:30px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-weight:500;
+    transition:0.3s;
+}
+
+.nav-links a:hover{
+    color:#c77482;
+}
+
+.nav-icons{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.nav-icons i{
+    cursor:pointer;
+    font-size:18px;
+}
+
+/* ================= CART ICON ================= */
+
+.cart-icon{
+    position:relative;
+    cursor:pointer;
+}
+
+#cartCount{
+    position:absolute;
+    top:-8px;
+    right:-10px;
+    background:#c77482;
+    color:white;
+    font-size:12px;
+    padding:3px 7px;
+    border-radius:50%;
+}
+
+/* ================= WISHLIST ICON ================= */
+
+.wishlist-icon{
+    position:relative;
+    font-size:20px;
+    cursor:pointer;
+    color:#333;
+    transition:0.3s;
+}
+
+.wishlist-icon:hover{
+    color:#d6336c;
+}
+
+#wishlist-count{
+    position:absolute;
+    top:-8px;
+    right:-10px;
+    background:#ff4d6d;
+    color:white;
+    font-size:12px;
+    padding:2px 6px;
+    border-radius:50%;
+}
+
+/* ================= PRODUCT SECTION ================= */
+
+
+.product-container{
+    position:relative;
+    padding:40px 10%;
+    margin: 80px auto;
+    width: 75%;
+    max-width: 700px;
+    height: 70%;
+    max-height: 350px;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    background: white;
+     border-radius: 25px;
+
+}
+
+/* background circles */
+
+.product-container::before{
+    content:"";
+    position:absolute;
+    width:450px;
+    height:450px;
+    background:#e9a9b3;
+    border-radius:50%;
+    right:-150px;
+    top:-150px;
+    z-index:-1;
+    margin-right: -230px;
+}
+
+.product-container::after{
+    content:"";
+    position:absolute;
+    width:400px;
+    height:400px;
+    background:#d98c8c;
+    border-radius:50%;
+    left:-220px;
+    bottom:-150px;
+    z-index:-1;
+    margin-left:-280px;
+}
+
+/* SINGLE WHITE BOX */
+
+.product-container{
+    display:flex;
+    align-items:center;
+    gap:60px;
+    background:white;
+    padding:50px;
+    border-radius:25px;
+    box-shadow:0 15px 30px rgba(0,0,0,0.08);
+}
+
+/* IMAGE LEFT */
+
+.product-image img{
+    width:200px;
+    border-radius:20px;
+    /* margin-right: 80px; */
+    margin-top: 30px;
+}
+
+/* DETAILS RIGHT */
+
+.product-details{
+    flex:1;
+}
+
+.product-details h2{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.product-details h3{
+    color:#c77482;
+    margin-bottom:15px;
+}
+
+.product-details p{
+    margin-bottom:20px;
+    line-height:1.6;
+}
+
+
+/* Responsive */
+
+@media(max-width:900px){
+
+    .product-container{
+        flex-direction:column;
+    }
+
+    .product-image,
+    .product-details{
+        border-radius:25px;
+        width:100%;
+    }
+
+    .product-image img{
+        width:100%;
+    }
+}
+
+
+/* HEART ON PRODUCT PAGE */
+
+.like-btn{
+    position:absolute;
+    top:10px;
+    right:10px;
+    font-size:22px;
+    cursor:pointer;
+    color:#999;
+    transition:0.3s;
+}
+
+.like-btn.active{
+    color:#d6336c;
+}
+
+.like-btn:hover{
+    transform:scale(1.1);
+}
+
+/* details */
+
+.details-section{
+    max-width:400px;
+}
+
+.details-section h1{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.price{
+    color:#c77482;
+    font-size:22px;
+    margin-bottom:15px;
+}
+
+.desc{
+    margin-bottom:20px;
+    color:#666;
+    line-height:1.5;
+}
+
+input{
+    width:70px;
+    padding:8px;
+    margin:10px 0 20px 0;
+    border-radius:8px;
+    border:1px solid #ddd;
+}
+
+.btn-group{
+    margin-top:10px;
+}
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:25px;
+    background:#e6a4a4;
+    color:white;
+    cursor:pointer;
+    margin-right:10px;
+    transition:0.3s;
+    font-weight:500;
+}
+
+button:hover{
+    background:#d98c8c;
+}
+
+.buy{
+    background:#c77482;
+}
+
+/* ================= SUGGESTIONS ================= */
+
+.suggestions{
+    padding:60px 10%;
+}
+
+.suggestions h2{
+    margin-bottom:30px;
+}
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:white;
+    padding:15px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,0.05);
+    transition:0.3s;
+    position:relative;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+.card h4{
+    margin:10px 0 5px;
+}
+
+.card p{
+    color:#c77482;
+    margin-bottom:10px;
+}
+
+.card button{
+    width:100%;
+}
+
+/* HEART INSIDE CARD */
+
+.card .like-btn{
+    position:absolute;
+    top:10px;
+    right:15px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+    .product-details{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .image-section img{
+        width:100%;
+    }
+
+    .nav-links{
+        display:none;
+    }
+}
+/* wishlist */
+.wishlist {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    font-size: 22px;
+    cursor: pointer;
+    color: #d98c8c;
+}
+
+.wishlist.active {
+    color: red;
+}
+/* cart icon */
+.cart-icon {
+    position: relative;
+    color: #333;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+#cart-Count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background: #ff4d6d;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+.back-btn{
+    position: absolute;
+    top: 20px;
+    left: 55px;
+    /* margin-bottom: 50px; */
+
+    /* padding: 8px 15px; */
+    background: #c77482;
+    color: white;
+    border: none;
+    /* border-radius: 20px; */
+    cursor: pointer;
+    font-size: 14px;
+
+    z-index: 10;
+}
+
+.back-arrow:hover i{
+    transform: translateX(-5px);
+    color: #000;
+}
+

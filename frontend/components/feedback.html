@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Reviews</title>
+<link rel="stylesheet" href="../styles/feedback.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<button class="back-btn" onclick="goBack()">← Back</button>
+
+<div class="reviews-container">
+
+    <h1 class="reviews-title">Reviews</h1>
+
+    <div class="reviews-list" id="reviewsList">
+        
+        <!-- Sample Review Card -->
+        <div class="review-card">
+            <div class="review-header">
+                <img src="../assets/about.jpg">
+                <h3>Olivia Wilson</h3>
+
+                <!-- DELETE ICON -->
+                <i class="fa-solid fa-trash delete-review" data-id="${review.id}"></i>
+
+            </div>
+            <p>Amazing service! Highly recommended ❤️</p>
+
+            <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <button id="openPopup" class="review-btn">
+        + Write a Review
+    </button>
+
+</div>
+
+
+<!-- Popup Modal -->
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <h2>Give Your Feedback</h2>
+
+        <textarea id="reviewText" placeholder="Write your feedback"></textarea>
+
+        <div class="stars-input">
+            <i class="fa-regular fa-star" data-value="1"></i>
+            <i class="fa-regular fa-star" data-value="2"></i>
+            <i class="fa-regular fa-star" data-value="3"></i>
+            <i class="fa-regular fa-star" data-value="4"></i>
+            <i class="fa-regular fa-star" data-value="5"></i>
+        </div>
+
+        <button id="submitReview">Submit</button>
+        <span id="closePopup">×</span>
+    </div>
+</div>
+
+<script src="../utils/feedback.js"></script>
+
+</body>
+</html>

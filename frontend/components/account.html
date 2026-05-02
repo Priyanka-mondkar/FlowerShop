@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account</title>
+
+    <link rel="stylesheet" href="../styles/account.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="account-wrapper">
+
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <button class="back-btn" onclick="goBack()">← Back</button>
+
+            <h2>My Account</h2>
+        </div>
+
+        <div class="account-container">
+
+            <div class="account-card">
+
+                <form id="accountForm" enctype="multipart/form-data">
+
+
+                    <div class="avatar-section">
+
+                        <div class="avatar-wrapper">
+
+                            <img id="avatarPreview" src="../assets/login/profile.jpg" class="avatar">
+
+                            <label for="avatarInput" class="camera-icon">
+                                <i class="fa-solid fa-camera"></i>
+                            </label>
+
+                            <input type="file" id="avatarInput" name="avatar" accept="image/*" hidden>
+
+                        </div>
+
+                    </div>
+                    <!-- PERSONAL INFO -->
+                    <div class="section">
+                        <h3>Personal Information</h3>
+
+                        <input type="text" id="name" placeholder="Full Name" required>
+                        <input type="email" id="email" placeholder="Email Address" required>
+                        <input type="text" id="phone" placeholder="Mobile Number" required>
+                    </div>
+
+                    <!-- ADDRESS -->
+                    <div class="section">
+                        <h3>Shipping Address</h3>
+
+                        <input type="text" id="flat" placeholder="Flat / House No" required>
+                        <input type="text" id="area" placeholder="Area / Street" required>
+                        <input type="text" id="city" placeholder="City" required>
+                        <input type="text" id="state" placeholder="State" required>
+                        <input type="text" id="pincode" placeholder="Zip code" required>
+                    </div>
+
+                    <button type="submit" class="save-btn">
+                        <i class="fa-solid fa-floppy-disk"></i> Save Changes
+                    </button>
+                    <div id="loader" class="loader" style="display:none;"></div>
+
+                    <p id="successMsg" class="success-msg"></p>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="../utils/account.js"></script>
+
+</body>
+
+</html>

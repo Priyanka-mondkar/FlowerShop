@@ -1,0 +1,210 @@
+css * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Body Theme */
+body {
+    background: #f4cfd4;
+    min-height: 100vh;
+}
+
+/* Top Bar */
+/* .top-bar {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+} */
+
+.top-bar h2 {
+    flex: 1;
+    text-align: center;
+    color: #7a3e4d;
+    font-size: 30px;
+    margin-bottom: -10px;
+}
+
+/* BACK BUTTON */
+
+.back-btn{
+/* background:none; */
+border:none;
+font-size:16px;
+cursor:pointer;
+/* margin-bottom:10px; */
+color:#555;
+border-radius:5px;
+background:#c77482;
+color:white;
+margin-top:10px;
+width:70px;
+height:30px;
+}
+
+/* Main Container */
+.account-container {
+    display: flex;
+    justify-content: center;
+    padding: 60px 20px;
+    position: relative;
+}
+
+/* Background Circles (same style as feedback page) */
+
+.account-container::before {
+    content: "";
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    background: #d98f9b;
+    border-radius: 50%;
+    right: -120px;
+    top: -120px;
+    z-index: 0;
+}
+
+.account-container::after {
+    content: "";
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: #c77482;
+    border-radius: 50%;
+    left: -120px;
+    bottom: -120px;
+    z-index: 0;
+}
+
+/* Account Card */
+.account-card {
+    background: white;
+    width: 100%;
+    max-width: 600px;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    position: relative;
+    z-index: 2;
+}
+
+/* Sections */
+.section {
+    margin-bottom: 25px;
+}
+
+.section h3 {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #7a3e4d;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+/* Inputs */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #c77482;
+    box-shadow: 0 0 0 3px rgba(199, 116, 130, 0.2);
+}
+
+/* Save Button */
+.save-btn {
+    width: 100%;
+    padding: 14px;
+    background: #c77482;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.save-btn:hover {
+    background: #7a3e4d;
+}
+
+/* Success Message */
+.success-msg {
+    margin-top: 10px;
+    text-align: center;
+    color: #27ae60;
+    font-size: 14px;
+}
+
+/* Avatar Section */
+
+.avatar-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 110px;
+    height: 110px;
+}
+
+.avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #c77482;
+}
+
+/* Camera Icon */
+
+.camera-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #c77482;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.camera-icon:hover {
+    background: #7a3e4d;
+}
+/* loader */
+.loader{
+    width:40px;
+    height:40px;
+    border:4px solid #f3f3f3;
+    border-top:4px solid #c77482;
+    border-radius:50%;
+    animation: spin 1s linear infinite;
+    margin:15px auto;
+}
+
+@keyframes spin{
+    0%{transform:rotate(0deg);}
+    100%{transform:rotate(360deg);}
+}

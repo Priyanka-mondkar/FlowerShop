@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Moonflowers Auth</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="../styles/login.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+<a href="home.html" class="back-arrow">
+    <i class="fa-solid fa-arrow-left"></i>
+</a>
+<div class="container">
+
+    <!-- Image Side -->
+    <div class="image-box">
+        <img src="../assets/anniversary/Peonies.jpg" alt="Flowers">
+    </div>
+
+    <!-- Form Side -->
+    <div class="login-box">
+
+        <img src="../assets/login/MOON-Photoroom.png" class="logo">
+
+        <!-- LOGIN FORM -->
+        <form id="loginForm" class="active">
+            <input type="email" id="loginEmail" placeholder="Enter Email" required>
+            <input type="password" id="loginPassword" placeholder="Enter Password" required>
+            <div class="error" id="loginError"></div>
+            <div class="success" id="loginSuccess"></div>
+            <button type="submit">Login</button>
+
+            <p class="register">
+                Don't have an account? 
+                <span id="goRegister" style="cursor:pointer;">Register</span>
+            </p>
+        </form>
+
+        <!-- REGISTER FORM -->
+        <form id="registerForm">
+            <input type="text" id="name" placeholder="Full Name" required>
+            <input type="email" id="registerEmail" placeholder="Enter Email" required>
+            <input type="password" id="registerPassword" placeholder="Create Password" required>
+            <div class="error" id="registerError"></div>
+            <div class="success" id="registerSuccess"></div>
+            <button type="submit">Register</button>
+
+            <p class="register">
+                Already have an account? 
+                <span id="goLogin" style="cursor:pointer;">Login</span>
+            </p>
+        </form>
+
+    </div>
+</div>
+
+<script src="../utils/login.js"></script>
+</body>
+</html>
